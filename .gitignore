@@ -2,3 +2,4 @@
 .idea
 # Environments
 venv/
+__pycache__/
