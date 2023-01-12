@@ -45,11 +45,12 @@ frame_count_yawn = 0
 min_frame_yawn = 24
 ratio_lips_max = 1.8
 
-
+font = cv.FONT_HERSHEY_COMPLEX_SMALL
 speech = pyttsx3.init()
 
 while True:
     result, image = capture.read()
+    height, width = image.shape[:2]
 
     if result:
         image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
@@ -85,11 +86,15 @@ while True:
 
             if frame_count_sleep > min_frame_sleep:
                 # Closing the eyes
+                cv.putText(image, 'Alert! Driver Sleeping.', (100, height - 20), font, 1, (255, 255, 255), 1, cv.LINE_AA)
+                cv.rectangle(image, (0, 0), (width, height), (40, 20, 250), 10)
                 message = 'Drowsy Alert: It appears you are sleeping. Kindly wake up'
                 t = threading.Thread(target=run_speech, args=(speech, message))  # create new instance if thread is dead
                 t.start()   
             elif frame_count_yawn > min_frame_yawn:
                 # Open his mouth
+                cv.putText(image, 'Warning! Driver Tired.', (100, height - 20), font, 1, (255, 255, 255), 1, cv.LINE_AA)
+                cv.rectangle(image, (0, 0), (width, height), (40, 210, 255), 10)
                 message = 'Drowsy Warning: You look tired. Kindly take a rest.'
                 p = threading.Thread(target=run_speech, args=(speech, message))  # create new instance if thread is dead
                 p.start()
