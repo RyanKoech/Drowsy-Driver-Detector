@@ -3,9 +3,12 @@ from scipy.spatial import distance as dis
 
 
 def run_speech(speech, speech_message):
-    speech.say(speech_message)
-    speech.runAndWait()
-
+    try:
+        print(speech_message)
+        speech.say(speech_message)
+        speech.runAndWait()
+    except:
+        pass
 
 def draw_landmarks(image, outputs, land_mark, color):
     height, width = image.shape[:2]
